@@ -1,0 +1,28 @@
+<div class="page stack">
+  <header class="stack" style="gap: var(--space-2)">
+    <h1>Nexo</h1>
+    <p style="color: var(--color-ink-soft)">Sistema de gestión de arrendamientos y pagos.</p>
+  </header>
+
+  <section class="card stack">
+    <h2>Nuevo contrato</h2>
+    <nexo-text-field label="Inquilino" placeholder="Nombre completo" [(ngModel)]="tenantName" />
+    <nexo-select-field label="Tipo de propiedad" [options]="propertyTypes" [(ngModel)]="propertyType" />
+    <div class="cluster">
+      <nexo-button variant="primary">Guardar contrato</nexo-button>
+      <nexo-button variant="secondary">Guardar como borrador</nexo-button>
+      <nexo-button variant="ghost">Cancelar</nexo-button>
+    </div>
+  </section>
+
+  <section class="card stack">
+    <h2>Estados de contrato</h2>
+    <div class="cluster">
+      <span class="badge badge--warning">DRAFT</span>
+      <span class="badge badge--success">ACTIVE</span>
+      <span class="badge badge--danger">OVERDUE</span>
+      <span class="badge badge--info">RENEWAL</span>
+      <span class="badge badge--neutral">TERMINATED</span>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,19 @@
+<label class="field">
+  @if (label()) {
+    <span class="field__label">{{ label() }}</span>
+  }
+  <input
+    class="field__control"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [disabled]="disabled()"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()"
+  />
+  @if (error()) {
+    <span class="field__error">{{ error() }}</span>
+  } @else if (hint()) {
+    <span class="field__hint">{{ hint() }}</span>
+  }
+</label>

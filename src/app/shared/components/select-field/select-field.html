@@ -1,0 +1,11 @@
+<label class="field">
+  @if (label()) {
+    <span class="field__label">{{ label() }}</span>
+  }
+  <select class="field__control" [value]="value()" [disabled]="disabled()" (change)="handleChange($event)" (blur)="handleBlur()">
+    <option value="" disabled>{{ placeholder() }}</option>
+    @for (option of options(); track option.value) {
+      <option [value]="option.value">{{ option.label }}</option>
+    }
+  </select>
+</label>
