@@ -1,3 +1,5 @@
+@use 'glass';
+
 .page {
   max-width: 1100px;
   margin-inline: auto;
@@ -22,9 +24,9 @@
 }
 
 .card {
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
+  @include glass.glass-surface;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   padding: var(--space-5);
+  overflow: hidden;
 }

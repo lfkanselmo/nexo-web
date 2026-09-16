@@ -1,14 +1,17 @@
+@use '../../../../styles/glass';
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-6);
   font-size: var(--text-base);
   font-weight: 600;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition:
     transform var(--transition-fast) var(--ease-spring),
     background-color var(--transition-fast),
@@ -16,7 +19,7 @@
     box-shadow var(--transition-fast);
 
   &:active:not(:disabled) {
-    transform: scale(0.97);
+    transform: scale(0.96);
   }
 
   &:focus-visible {
@@ -31,7 +34,7 @@
 }
 
 .btn--primary {
-  background: var(--color-accent);
+  @include glass.glass-surface(var(--color-accent));
   color: var(--color-accent-ink);
   box-shadow: var(--shadow-sm);
 
@@ -41,9 +44,8 @@
 }
 
 .btn--secondary {
-  background: var(--color-surface-raised);
+  @include glass.glass-surface(var(--color-surface-raised));
   color: var(--color-ink);
-  border-color: var(--color-border-strong);
 
   &:hover:not(:disabled) {
     border-color: var(--color-accent);
@@ -53,6 +55,7 @@
 
 .btn--ghost {
   background: transparent;
+  border: 1px solid transparent;
   color: var(--color-ink-soft);
 
   &:hover:not(:disabled) {

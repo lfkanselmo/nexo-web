@@ -1,0 +1,22 @@
+// Solo para elementos que soportan contenido generado (div, button) — <input> y <select>
+// son elementos reemplazados y no pintan ::before, por eso el highlight vive aparte.
+@mixin glass-surface($bg: var(--color-surface-raised)) {
+  @include glass-base($bg);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glass-highlight);
+    pointer-events: none;
+  }
+}
+
+@mixin glass-base($bg: var(--color-surface-raised)) {
+  background: $bg;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--color-border);
+}
