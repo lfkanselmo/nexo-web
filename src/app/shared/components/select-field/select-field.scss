@@ -1,3 +1,64 @@
+@use '../../../../styles/glass';
+
 :host {
   display: block;
+  position: relative;
+}
+
+.listbox__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  text-align: left;
+  cursor: pointer;
+}
+
+.listbox__placeholder {
+  color: var(--color-ink-soft);
+}
+
+.listbox__chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-ink-soft);
+  transition: transform var(--transition-fast) var(--ease-spring);
+}
+
+.listbox__trigger--open .listbox__chevron {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.listbox__panel {
+  @include glass.glass-surface(var(--color-surface-raised));
+  list-style: none;
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.listbox__option {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.listbox__option--active {
+  background: var(--color-accent-soft);
+}
+
+.listbox__option--selected {
+  font-weight: 600;
+  color: var(--color-accent);
 }
