@@ -1,0 +1,28 @@
+<div class="page stack">
+  <header class="cluster" style="justify-content: space-between">
+    <h1>Contratos</h1>
+    <nexo-button variant="primary" routerLink="/contracts/new">Nuevo contrato</nexo-button>
+  </header>
+
+  <section class="card stack">
+    <nexo-select-field label="Filtrar por estado" [options]="statusOptions" [(ngModel)]="statusFilter" (ngModelChange)="load()" />
+
+    @if (errorMessage()) {
+      <p class="field__error">{{ errorMessage() }}</p>
+    }
+
+    @if (contracts().length === 0) {
+      <p style="color: var(--color-ink-soft)">No hay contratos para este filtro.</p>
+    }
+
+    @for (contract of contracts(); track contract.id) {
+      <a class="contract-row" [routerLink]="['/contracts', contract.id]">
+        <div class="stack" style="gap: var(--space-1)">
+          <strong>{{ contract.startDate }} — {{ contract.endDate }}</strong>
+          <span style="color: var(--color-ink-soft)">{{ contract.monthlyRent | number: '1.2-2' }} / mes</span>
+        </div>
+        <nexo-status-badge [status]="contract.status" />
+      </a>
+    }
+  </section>
+</div>

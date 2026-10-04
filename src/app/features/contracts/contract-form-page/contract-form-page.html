@@ -1,0 +1,30 @@
+<div class="page stack">
+  <header>
+    <h1>Nuevo contrato</h1>
+  </header>
+
+  <section class="card stack">
+    <nexo-select-field label="Propiedad" [options]="propertyOptions()" [(ngModel)]="propertyId" />
+    <nexo-select-field label="Inquilino" [options]="tenantOptions()" [(ngModel)]="tenantId" />
+
+    <div class="cluster">
+      <nexo-text-field label="Fecha de inicio" type="date" [(ngModel)]="startDate" />
+      <nexo-text-field label="Fecha de fin" type="date" [(ngModel)]="endDate" />
+    </div>
+
+    <div class="cluster">
+      <nexo-text-field label="Renta mensual" type="number" placeholder="1200.00" [(ngModel)]="monthlyRent" />
+      <nexo-text-field label="Tasa de interés diaria" type="number" placeholder="0.01" [(ngModel)]="dailyInterestRate" />
+    </div>
+
+    <nexo-select-field label="Tipo de interés" [options]="interestTypeOptions" [(ngModel)]="interestType" />
+
+    @if (errorMessage()) {
+      <p class="field__error">{{ errorMessage() }}</p>
+    }
+
+    <div class="cluster">
+      <nexo-button variant="primary" [disabled]="saving()" (click)="submit()">Crear contrato</nexo-button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,86 @@
+@if (contract(); as contract) {
+  <div class="page stack">
+    <header class="cluster" style="justify-content: space-between">
+      <div class="stack" style="gap: var(--space-1)">
+        <h1>{{ property()?.address ?? 'Contrato' }}</h1>
+        <span style="color: var(--color-ink-soft)">{{ tenant()?.fullName }} · {{ contract.startDate }} — {{ contract.endDate }}</span>
+      </div>
+      <nexo-status-badge [status]="contract.status" />
+    </header>
+
+    @if (errorMessage()) {
+      <p class="field__error">{{ errorMessage() }}</p>
+    }
+
+    <section class="card stack">
+      <h2>Detalle</h2>
+      <div class="cluster" style="justify-content: space-between">
+        <span>Renta mensual</span>
+        <strong>{{ contract.monthlyRent | number: '1.2-2' }}</strong>
+      </div>
+      <div class="cluster" style="justify-content: space-between">
+        <span>Tasa de interés diaria</span>
+        <strong>{{ contract.dailyInterestRate }}</strong>
+      </div>
+      <div class="cluster" style="justify-content: space-between">
+        <span>Tipo de interés</span>
+        <strong>{{ contract.interestType === 'FIXED' ? 'Fijo' : 'Variable' }}</strong>
+      </div>
+
+      <div class="cluster">
+        @if (canTransitionTo('ACTIVE')) {
+          <nexo-button variant="primary" [disabled]="working()" (click)="transitionTo('ACTIVE')">Activar</nexo-button>
+        }
+        @if (canTransitionTo('RENEWAL')) {
+          <nexo-button variant="secondary" [disabled]="working()" (click)="transitionTo('RENEWAL')">Renovar</nexo-button>
+        }
+        @if (canTransitionTo('TERMINATED')) {
+          <nexo-button variant="ghost" [disabled]="working()" (click)="transitionTo('TERMINATED')">Terminar</nexo-button>
+        }
+      </div>
+    </section>
+
+    @if (penalty(); as penalty) {
+      <section class="card stack">
+        <h2>Mora</h2>
+        @if (penalty.overdueDays === 0) {
+          <p style="color: var(--color-ink-soft)">Sin pagos vencidos.</p>
+        } @else {
+          <div class="cluster" style="justify-content: space-between">
+            <span>Días de atraso</span>
+            <strong>{{ penalty.overdueDays }}</strong>
+          </div>
+          <div class="cluster" style="justify-content: space-between">
+            <span>Capital adeudado</span>
+            <strong>{{ penalty.principalOwed | number: '1.2-2' }}</strong>
+          </div>
+          <div class="cluster" style="justify-content: space-between">
+            <span>Interés de mora</span>
+            <strong>{{ penalty.interestAmount | number: '1.2-2' }}</strong>
+          </div>
+          <div class="cluster" style="justify-content: space-between">
+            <span>Total</span>
+            <strong>{{ penalty.total | number: '1.2-2' }}</strong>
+          </div>
+        }
+      </section>
+    }
+
+    <section class="card stack">
+      <h2>Pagos</h2>
+      @for (payment of payments(); track payment.id) {
+        <div class="cluster" style="justify-content: space-between">
+          <span>{{ payment.dueDate }}</span>
+          <span>{{ payment.amount | number: '1.2-2' }}</span>
+          <nexo-payment-status-badge [status]="payment.status" />
+        </div>
+      }
+
+      <div class="cluster">
+        <nexo-text-field label="Fecha de vencimiento" type="date" [(ngModel)]="paymentDueDate" />
+        <nexo-text-field label="Monto" type="number" placeholder="1200.00" [(ngModel)]="paymentAmount" />
+        <nexo-button variant="secondary" (click)="schedulePayment()">Agendar pago</nexo-button>
+      </div>
+    </section>
+  </div>
+}

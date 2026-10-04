@@ -1,0 +1,30 @@
+<div class="page stack">
+  <header>
+    <h1>Propiedades</h1>
+  </header>
+
+  <section class="card stack">
+    <h2>Nueva propiedad</h2>
+    <nexo-text-field label="Dirección" placeholder="Calle 10 # 5-20" [(ngModel)]="address" />
+    <nexo-text-field label="Ciudad" placeholder="Bogotá" [(ngModel)]="city" />
+    @if (errorMessage()) {
+      <p class="field__error">{{ errorMessage() }}</p>
+    }
+    <div class="cluster">
+      <nexo-button variant="primary" [disabled]="saving()" (click)="submit()">Crear propiedad</nexo-button>
+    </div>
+  </section>
+
+  <section class="card stack">
+    <h2>Todas las propiedades</h2>
+    @if (properties().length === 0) {
+      <p style="color: var(--color-ink-soft)">Aún no hay propiedades registradas.</p>
+    }
+    @for (property of properties(); track property.id) {
+      <div class="property-row">
+        <strong>{{ property.address }}</strong>
+        <span style="color: var(--color-ink-soft)">{{ property.city }}</span>
+      </div>
+    }
+  </section>
+</div>

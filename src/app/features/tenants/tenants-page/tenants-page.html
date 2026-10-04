@@ -1,0 +1,31 @@
+<div class="page stack">
+  <header>
+    <h1>Inquilinos</h1>
+  </header>
+
+  <section class="card stack">
+    <h2>Nuevo inquilino</h2>
+    <nexo-text-field label="Nombre completo" placeholder="Ana Gómez" [(ngModel)]="fullName" />
+    <nexo-text-field label="Correo" type="email" placeholder="ana@example.com" [(ngModel)]="email" />
+    <nexo-text-field label="Documento" placeholder="CC123456" [(ngModel)]="documentId" />
+    @if (errorMessage()) {
+      <p class="field__error">{{ errorMessage() }}</p>
+    }
+    <div class="cluster">
+      <nexo-button variant="primary" [disabled]="saving()" (click)="submit()">Crear inquilino</nexo-button>
+    </div>
+  </section>
+
+  <section class="card stack">
+    <h2>Todos los inquilinos</h2>
+    @if (tenants().length === 0) {
+      <p style="color: var(--color-ink-soft)">Aún no hay inquilinos registrados.</p>
+    }
+    @for (tenant of tenants(); track tenant.id) {
+      <div class="tenant-row">
+        <strong>{{ tenant.fullName }}</strong>
+        <span style="color: var(--color-ink-soft)">{{ tenant.email }}</span>
+      </div>
+    }
+  </section>
+</div>

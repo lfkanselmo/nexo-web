@@ -18,11 +18,9 @@
   <section class="card stack">
     <h2>Estados de contrato</h2>
     <div class="cluster">
-      <span class="badge badge--warning">DRAFT</span>
-      <span class="badge badge--success">ACTIVE</span>
-      <span class="badge badge--danger">OVERDUE</span>
-      <span class="badge badge--info">RENEWAL</span>
-      <span class="badge badge--neutral">TERMINATED</span>
+      @for (status of allStatuses; track status) {
+        <nexo-status-badge [status]="status" />
+      }
     </div>
   </section>
 </div>
