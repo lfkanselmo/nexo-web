@@ -25,13 +25,31 @@ ng test
 ng build
 ```
 
+Los tests de las pantallas mockean la API con `HttpTestingController`, no le pegan a
+`nexo-api` de verdad. Un detalle si escribís un test nuevo que simula un click: `<nexo-button
+(click)="...">` registra el listener en el elemento host, no en el `<button>` nativo de su
+propia plantilla — `elemento.dispatchEvent(new MouseEvent('click'))` sin `{ bubbles: true }` no
+lo activa. `elemento.click()` nativo sí burbujea.
+
+## Pantallas
+
+- `/contracts`: listado con filtro por estado, y el alta de un contrato nuevo.
+- `/contracts/:id`: detalle — datos del contrato, los botones de transición de estado que
+  correspondan según el estado actual (el mismo mapa que `LeaseStatus.canTransitionTo` del
+  backend, para no ofrecer nunca un botón que el servidor rechazaría), la sección de mora, y
+  alta/listado de pagos.
+- `/properties` y `/tenants`: alta y listado, simples a propósito — son soporte para poder armar
+  contratos, no el foco del producto.
+- `/design-system`: la vitrina de los componentes compartidos, para seguir validando el sistema
+  de diseño sin mezclarlo con una pantalla real.
+
+Los servicios (`core/services`) hablan con la API real vía `HttpClient` —
+`environment.apiBaseUrl` resuelto en build time, no en runtime.
+
 ## Sistema de diseño
 
-La ruta raíz (`/`) sirve de vitrina viva de los componentes compartidos
-(`shared/components`) mientras se construyen las pantallas reales — botones, campos de texto y
-select con el mismo lenguaje visual, tokens en `src/styles/_tokens.scss` (paleta, tipografía,
-espaciado, radios, sombras, easing) y soporte de modo oscuro automático vía
-`prefers-color-scheme`.
+Tokens en `src/styles/_tokens.scss` (paleta, tipografía, espaciado, radios, sombras, easing) y
+soporte de modo oscuro automático vía `prefers-color-scheme`.
 
 El efecto de vidrio (`src/styles/_glass.scss`) usa `backdrop-filter: blur() saturate()` sobre
 fondos semitransparentes, con un fondo de página en degradados (`--mesh-bg`) para que haya algo
